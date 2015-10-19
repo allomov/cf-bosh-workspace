@@ -1,0 +1,35 @@
+---
+name: cf-openstack-tiny
+director_uuid: DIRECTOR_UUID
+
+releases:
+  - name: cf
+    version: 219
+    url: https://bosh.io/d/github.com/cloudfoundry/cf-release?v=219
+  # - name: cf-haproxy
+  #   version: 2 # DEFAULT_CFHAPROXY_RELEASE_VERSION
+  #   git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
+
+templates:
+  - cf/cf-deployment.yml
+  - cf/cf-resource-pools.yml
+  - cf/cf-jobs.yml
+  - cf/cf-lamb.yml
+  - cf/cf-properties.yml
+  - cf/cf-infrastructure-openstack.yml
+  - stubs/cf.yml
+  # - cf/cf-deployment.yml
+  # - cf-allow-services-access.yml
+  # - cf/cf-properties.yml
+  # - cf/cf-infrastructure-aws.yml
+  # - cf-properties.yml
+  # - parallel.yml
+  # - cf-no-ssl.yml
+  # - cf-secrets.yml
+  # - tiny/cf-use-nfs.yml
+  # - tiny/cf-use-haproxy.yml
+  # - cf-networking.yml
+
+stemcells:
+  - name: bosh-openstack-kvm-ubuntu-trusty-go_agent
+    version: 3104
