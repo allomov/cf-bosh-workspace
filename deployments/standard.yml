@@ -1,6 +1,6 @@
 ---
-name: cf-openstack-tiny
-director_uuid: DIRECTOR_UUID
+name: cf-219
+director_uuid: "b58d0c4d-8992-46c9-bf23-1299a4b47e5c" 
 
 releases:
   - name: cf
@@ -32,4 +32,7 @@ templates:
 
 stemcells:
   - name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 3104
+    version: 3093 
+
+meta: {}
+
