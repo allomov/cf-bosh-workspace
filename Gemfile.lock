@@ -213,6 +213,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    yaml-lint (0.0.7)
 
 PLATFORMS
   ruby
@@ -221,6 +222,7 @@ DEPENDENCIES
   bosh-share
   bosh-workspace
   bosh_cli
+  yaml-lint
 
 BUNDLED WITH
    1.10.6
