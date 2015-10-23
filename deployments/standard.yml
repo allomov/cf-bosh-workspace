@@ -1,5 +1,4 @@
 ---
-<% require 'yaml' %>
 <% domain = if_p('domain') { p('domain') }.else { "#{p('openstack.floating_ip')}.xip.io" } %>
 
 name: cf-219
@@ -23,6 +22,7 @@ templates:
   - cf/cf-lamb.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-openstack.yml
+  - common/cf-use-nfs.yml
   - common/default_secrets.yml
   - common/cf-networking.yml
   - common/cf-no-ssl.yml
