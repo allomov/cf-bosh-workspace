@@ -42,6 +42,8 @@ templates:
 meta:
   environment: cf-219
 
+  domain: <%= domain %>
+
   releases:
   - name: cf
     url: https://bosh.io/d/github.com/cloudfoundry/cf-release?v=219
