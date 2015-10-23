@@ -68,11 +68,14 @@ meta:
 
   floating_static_ips:
     - <%= p('openstack.floating_ip') %>
-<% prefix = p('networks.private_subnet.prefix') %>
+
+  <% prefix = p('networks.private_subnet.prefix') %>
   networks:
     - name: cf1
       default: [dns, gateway]
       cloud_properties: { net_id: "<%= p('networks.private_subnet.net_id') %>" }
+      subnet: []
+      net_id: "<%= p('networks.private_subnet.net_id') %>"
       subnets:
       - range: <%= prefix %>.2.0/24
         gateway: <%= prefix %>.2.1
@@ -84,6 +87,8 @@ meta:
         - <%= prefix %>.2.2-<%= prefix %>.2.11
     - name: cf2
       subnets: []
+      subnet: []
+      net_id: "fake"
       cloud_properties: { net_id: "fake-id" }
     - name: floating
       type: vip
