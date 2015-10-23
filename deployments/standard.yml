@@ -24,6 +24,7 @@ templates:
   - cf/cf-properties.yml
   - cf/cf-infrastructure-openstack.yml
   - common/default_secrets.yml
+  - common/cf-networking.yml
   # - cf/cf-deployment.yml
   # - cf-allow-services-access.yml
   # - cf/cf-properties.yml
@@ -34,7 +35,7 @@ templates:
   # - cf-secrets.yml
   # - tiny/cf-use-nfs.yml
   # - tiny/cf-use-haproxy.yml
-  # - cf-networking.yml
+  
 
 meta:
   environment: cf-219
@@ -84,7 +85,6 @@ meta:
   - name: floating
     type: vip
 
-properties:
   domain: <%= domain %>
 
 # code_snippet cf-stub-openstack end

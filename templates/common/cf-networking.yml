@@ -1,0 +1,79 @@
+meta:
+  networks:
+    ipmask: (( merge || "10.10" ))
+    dns: (( merge || nil ))
+    security_groups: (( merge || nil ))
+  
+    cf1:
+      quad: (( merge || "1" ))
+      net_id: (( merge ))
+      subnet: (( net_id ))
+      range: (( merge || defaults.cf1.range ))
+      gateway: (( merge || defaults.cf1.gateway ))
+      dns: (( merge || meta.networks.dns ))
+      reserved: (( merge || defaults.cf1.reserved ))
+      static: (( merge || defaults.cf1.static ))
+      security_groups: (( merge || meta.networks.security_groups ))
+
+    cf2:
+      quad: (( merge || "2" ))
+      net_id: (( merge ))
+      subnet: (( net_id ))
+      range: (( merge || defaults.cf2.range ))
+      gateway: (( merge || defaults.cf2.gateway ))
+      dns: (( merge || meta.networks.dns ))
+      reserved: (( merge || defaults.cf2.reserved ))
+      static: (( merge || defaults.cf2.static ))
+      security_groups: (( merge || meta.networks.security_groups ))
+
+defaults:
+  cf1:
+    net: (( meta.networks.ipmask "." meta.networks.cf1.quad ))
+    range: (( defaults.cf1.net ".0/24" ))
+    gateway: (( defaults.cf1.net ".1" ))
+    reserved:
+      - (( defaults.cf1.net ".2 - " defaults.cf1.net ".5" ))
+    static:
+      - (( defaults.cf1.net ".6 - " defaults.cf1.net ".50" ))
+
+  cf2:
+    net: (( meta.networks.ipmask "." meta.networks.cf2.quad ))
+    range: (( defaults.cf2.net ".0/24" ))
+    gateway: (( defaults.cf2.net ".1" ))
+    reserved:
+      - (( defaults.cf2.net ".2 - " defaults.cf2.net ".5" ))
+    static:
+      - (( defaults.cf2.net ".6 - " defaults.cf2.net ".50" ))
+
+networks:
+  - name: cf1
+    type: manual
+    subnets:
+      - name: default_unused
+        range: (( meta.networks.cf1.range ))
+        reserved: (( meta.networks.cf1.reserved ))
+        static: (( meta.networks.cf1.static ))
+        gateway: (( meta.networks.cf1.gateway ))
+        dns: (( meta.networks.cf1.dns ))
+        cloud_properties:
+          security_groups: (( meta.networks.cf1.security_groups ))
+          subnet: (( meta.networks.cf1.net_id ))
+          net_id: (( meta.networks.cf1.net_id ))
+
+  - name: cf2
+    type: manual
+    subnets:
+      - name: default_unused
+        range: (( meta.networks.cf2.range ))
+        reserved: (( meta.networks.cf2.reserved ))
+        static: (( meta.networks.cf2.static ))
+        gateway: (( meta.networks.cf2.gateway ))
+        dns: (( meta.networks.cf2.dns ))
+        cloud_properties:
+          security_groups: (( meta.networks.cf2.security_groups ))
+          subnet: (( meta.networks.cf2.net_id ))
+          net_id: (( meta.networks.cf2.net_id ))
+
+  - name: floating
+    type: vip
+    cloud_properties: {}

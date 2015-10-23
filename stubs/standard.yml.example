@@ -1,24 +1,19 @@
-# The following line helps maintain current documentation at http://docs.cloudfoundry.org.
-# code_snippet cf-stub-openstack start
 ---
 properties:
-  director_uuid: "b58d0c4d-8992-46c9-bf23-1299a4b47e5c"
   # domain: some-domain
+  director_uuid: "..."
   openstack:
-    net_id: "a35f16cf-27a7-452e-9e8c-160c3f061ac6"
-    auth_url: http://192.168.120.2:5000/v2.0
-    tenant: allomov-demo
-    username: a.lomov
-    api_key: 1qa@WS3ed
-    default_key_name: allomov
-    default_security_group: all-open
-    floating_ip: 192.168.120.118
-    subnetwork:
-      prefix: '10.10'
-      net_id: 'a35f16cf-27a7-452e-9e8c-160c3f061ac6'
+    net_id: "..."
+    auth_url: "..."
+    tenant: "..."
+    username: "..."
+    api_key: "..."
+    default_key_name: "..."
+    default_security_group: "..."
+    floating_ip: 192.168.x.x
 
   networks:
     private_subnet:
       prefix: '10.10'
-      net_id: 'a35f16cf-27a7-452e-9e8c-160c3f061ac6'
-      dns: '192.168.0.202'
+      net_id: '...'
+      dns: '192.168.0.2'
