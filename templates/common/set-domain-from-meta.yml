@@ -1,0 +1,5 @@
+---
+meta: (( merge ))
+
+properties:
+  domain: (( meta.domain ))
