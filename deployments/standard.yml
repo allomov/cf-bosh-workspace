@@ -61,27 +61,18 @@ meta:
 
   <% prefix = p('networks.private_subnet.prefix') %>
   networks:
-    - name: cf1
-      default: [dns, gateway]
-      cloud_properties: { net_id: "<%= p('networks.private_subnet.net_id') %>" }
-      subnet: []
+    ipmask: "<%= prefix %>"
+    dns: [ <%= p('networks.private_subnet.dns') %> ]
+    security_groups: [ <%= p('openstack.default_security_group') %> ]  
+  
+    cf1:
+      quad: "<%= p('networks.private_subnet.quad') %>"
       net_id: "<%= p('networks.private_subnet.net_id') %>"
-      subnets:
-      - range: <%= prefix %>.2.0/24
-        gateway: <%= prefix %>.2.1
-        dns: [ <%= p('networks.private_subnet.dns') %> ]
-        cloud_properties: { net_id: "<%= p('networks.private_subnet.net_id') %>" }
-        static:
-        - <%= prefix %>.2.16-<%= prefix %>.2.64
-        reserved:
-        - <%= prefix %>.2.2-<%= prefix %>.2.11
-    - name: cf2
-      subnets: []
-      subnet: []
-      net_id: "fake"
-      cloud_properties: { net_id: "fake-id" }
-    - name: floating
-      type: vip
+      static: [ "<%= prefix %>.2.16-<%= prefix %>.2.64" ]
+      reserved: [ "<%= prefix %>.2.2-<%= prefix %>.2.11" ]
+    cf2:
+      quad: "3"
+      net_id: CF_SUBNET2
 
   domain: <%= domain %>
 

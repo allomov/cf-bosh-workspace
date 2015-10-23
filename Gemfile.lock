@@ -1,3 +1,17 @@
+GIT
+  remote: git://github.com/Altoros/bosh-workspace.git
+  revision: 37b74cf48aeb9d87d149403735b74f6c7e1feaf0
+  branch: dev
+  specs:
+    bosh-workspace (0.9.2)
+      bosh-template (>= 1.2905.0)
+      bosh_cli (>= 1.2905.0)
+      bosh_common (>= 1.2905.0)
+      hashdiff (~> 0.2.1)
+      membrane (~> 1.1.0)
+      rugged (~> 0.23.0b3)
+      semi_semantic (~> 1.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -35,13 +49,6 @@ GEM
       membrane (~> 1.1.0)
       rest-client (~> 1.8.0)
       rubygems_api (~> 1.0.1)
-    bosh-workspace (0.9.2)
-      bosh_cli (>= 1.2905.0)
-      bosh_common (>= 1.2905.0)
-      hashdiff (~> 0.2.1)
-      membrane (~> 1.1.0)
-      rugged (~> 0.23.0b3)
-      semi_semantic (~> 1.1.0)
     bosh_cli (1.3100.0)
       blobstore_client (~> 1.3100.0)
       bosh-template (~> 1.3100.0)
@@ -220,7 +227,7 @@ PLATFORMS
 
 DEPENDENCIES
   bosh-share
-  bosh-workspace
+  bosh-workspace!
   bosh_cli
   yaml-lint
 
