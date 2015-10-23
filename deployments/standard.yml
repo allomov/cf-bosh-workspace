@@ -18,6 +18,7 @@ stemcells:
 
 templates:
   - cf/cf-deployment.yml
+  - common/cf-tiny-scalable.yml
   - cf/cf-resource-pools.yml
   - cf/cf-jobs.yml
   - cf/cf-lamb.yml
@@ -26,23 +27,10 @@ templates:
   - common/default_secrets.yml
   - common/cf-networking.yml
   - common/cf-no-ssl.yml
-  - common/parallel.yml
-  # - cf/cf-deployment.yml
-  # - cf-allow-services-access.yml
-  # - cf/cf-properties.yml
-  # - cf/cf-infrastructure-aws.yml
-  # - cf-properties.yml
-  # - parallel.yml
-  # - cf-no-ssl.yml
-  # - cf-secrets.yml
-  # - tiny/cf-use-nfs.yml
-  # - tiny/cf-use-haproxy.yml
-  
+  - common/parallel.yml  
 
 meta:
   environment: cf-219
-
-  domain: <%= domain %>
 
   releases:
   - name: cf
