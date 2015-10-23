@@ -25,6 +25,8 @@ templates:
   - cf/cf-infrastructure-openstack.yml
   - common/default_secrets.yml
   - common/cf-networking.yml
+  - common/cf-no-ssl.yml
+  - common/parallel.yml
   # - cf/cf-deployment.yml
   # - cf-allow-services-access.yml
   # - cf/cf-properties.yml
@@ -72,6 +74,7 @@ meta:
   - name: cf1
     default: [dns, gateway]
     subnets:
+    cloud_properties: { net_id: "<%= p('networks.private_subnet.net_id') %>" }
     - range: <%= prefix %>.2.0/24
       gateway: <%= prefix %>.2.1
       dns: [ <%= p('networks.private_subnet.dns') %> ]
@@ -82,6 +85,7 @@ meta:
       - <%= prefix %>.2.2-<%= prefix %>.2.11
   - name: cf2
     subnets: []
+    cloud_properties: { net_id: "fake-id" }
   - name: floating
     type: vip
 
