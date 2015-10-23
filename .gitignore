@@ -1,5 +1,6 @@
 stubs/*.yml
 templates/stubs/*.yml
+.deployments
 
 *.gem
 *.rbc

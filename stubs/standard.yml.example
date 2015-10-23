@@ -1,0 +1,243 @@
+# The following line helps maintain current documentation at http://docs.cloudfoundry.org.
+# code_snippet cf-stub-openstack start
+---
+director_uuid: director_uuid
+meta:
+  environment: cf-219
+  releases:
+  - name: cf
+    url: https://bosh.io/d/github.com/cloudfoundry/cf-release?v=219
+    sha1: 8f184915d4ad0bf27c49e03922364e3c13fed85d
+    version: latest
+
+  stemcell:
+    name: bosh-openstack-kvm-ubuntu-trusty-go_agent
+    url: https://bosh.io/d/stemcells/bosh-openstack-kvm-ubuntu-trusty-go_agent?v=3093 
+    sha1: 688fd678409ca19b4bea699e1d65d07b712c9a72
+    version: latest
+
+  openstack:
+    net_id: net_id
+    auth_url: auth_url
+    tenant: tenant
+    username: username
+    api_key: api_key
+    default_key_name: default_key_name
+    default_security_groups:
+      - default_security_group
+    connection_options:
+      ssl_verify_peer: false
+
+  floating_static_ips:
+  - floating_ip
+
+networks:
+- name: cf1
+  default: [dns, gateway]
+  subnets:
+  - range: 10.10.2.0/24
+    gateway: 10.10.2.1
+    dns: [192.168.0.202]
+    cloud_properties: { net_id: a35f16cf-27a7-452e-9e8c-160c3f061ac6 }
+    static:
+    - 10.10.2.16-10.10.2.64
+    reserved:
+    - 10.10.2.2-10.10.2.11
+- name: cf2
+  subnets: []
+- name: floating
+  type: vip
+properties:
+  cc:
+    droplets:
+      droplet_directory_key: the_key
+    buildpacks:
+      buildpack_directory_key: bd_key
+    staging_upload_user: username
+    staging_upload_password: password
+    bulk_api_password: password
+    db_encryption_key: the_key
+  ccdb:
+    roles:
+    - name: ccadmin
+      password: admin_password
+      tag: admin
+  databases:
+    roles:
+    - name: ccadmin
+      password: ccadmin_password
+    - name: uaaadmin
+      password: uaaadmin_password
+  dea_next:
+    disk_mb: 2048
+    memory_mb: 1024
+  domain: 192.168.120.118.xip.io 
+  loggregator_endpoint:
+    shared_secret: loggregator_endpoint_secret
+  nats:
+    user: nats_user
+    password: nats_password
+  router:
+    logrotate:
+      freq_min: 20
+      rotate: 5
+      size: 3M
+    enable_ssl: true
+    ssl_cert: |
+      -----BEGIN CERTIFICATE-----
+      MIIDBjCCAe4CCQCz3nn1SWrDdTANBgkqhkiG9w0BAQUFADBFMQswCQYDVQQGEwJB
+      VTETMBEGA1UECBMKU29tZS1TdGF0ZTEhMB8GA1UEChMYSW50ZXJuZXQgV2lkZ2l0
+      cyBQdHkgTHRkMB4XDTE1MDMwMzE4NTMyNloXDTE2MDMwMjE4NTMyNlowRTELMAkG
+      A1UEBhMCQVUxEzARBgNVBAgTClNvbWUtU3RhdGUxITAfBgNVBAoTGEludGVybmV0
+      IFdpZGdpdHMgUHR5IEx0ZDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+      AKtTK9xq/ycRO3fWbk1abunYf9CY6sl0Wlqm9UPMkI4j0itY2OyGyn1YuCCiEdM3
+      b8guGSWB0XSL5PBq33e7ioiaH98UEe+Ai+TBxnJsro5WQ/TMywzRDhZ4E7gxDBav
+      88ZY+y7ts0HznfxqEIn0Gu/UK+s6ajYcIy7d9L988+hA3K1FSdes8MavXhrI4xA1
+      fY21gESfFkD4SsqvrkISC012pa7oVw1f94slIVcAG+l9MMAkatBGxgWAQO6kxk5o
+      oH1Z5q2m0afeQBfFqzu5lCITLfgTWCUZUmbF6UpRhmD850/LqNtryAPrLLqXxdig
+      OHiWqvFpCusOu/4z1uGC5xECAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAV5RAFVQy
+      8Krs5c9ebYRseXO6czL9/Rfrt/weiC1XLcDkE2i2yYsBXazMYr58o4hACJwe2hoC
+      bihBZ9XnVpASEYHDLwDj3zxFP/bTuKs7tLhP7wz0lo8i6k5VSPAGBq2kjc/cO9a3
+      TMmLPks/Xm42MCSWGDnCEX1854B3+JK3CNEGqSY7FYXU4W9pZtHPZ3gBoy0ymSpg
+      mpleiY1Tbn5I2X7vviMW7jeviB5ivkZaXtObjyM3vtPLB+ILpa15ZhDSE5o71sjA
+      jXqrE1n5o/GXHX+1M8v3aJc30Az7QAqWohW/tw5SoiSmVQZWd7gFht9vSzaH2WgO
+      LwcpBC7+cUJEww==
+      -----END CERTIFICATE-----
+    ssl_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEpAIBAAKCAQEAq1Mr3Gr/JxE7d9ZuTVpu6dh/0JjqyXRaWqb1Q8yQjiPSK1jY
+      7IbKfVi4IKIR0zdvyC4ZJYHRdIvk8Grfd7uKiJof3xQR74CL5MHGcmyujlZD9MzL
+      DNEOFngTuDEMFq/zxlj7Lu2zQfOd/GoQifQa79Qr6zpqNhwjLt30v3zz6EDcrUVJ
+      16zwxq9eGsjjEDV9jbWARJ8WQPhKyq+uQhILTXalruhXDV/3iyUhVwAb6X0wwCRq
+      0EbGBYBA7qTGTmigfVnmrabRp95AF8WrO7mUIhMt+BNYJRlSZsXpSlGGYPznT8uo
+      22vIA+ssupfF2KA4eJaq8WkK6w67/jPW4YLnEQIDAQABAoIBAQCDVqpcOoZKK9K8
+      Bt3eXQKEMJ2ji2cKczFFJ5MEm9EBtoJLCryZbqfSue3Fzpj9pBUEkBpk/4VT5F7o
+      0/Vmc5Y7LHRcbqVlRtV30/lPBPQ4V/eWtly/AZDcNsdfP/J1fgPSvaoqCr2ORLWL
+      qL/vEfyIeM4GcWy0+JMcPbmABslw9O6Ptc5RGiP98vCLHQh/++sOtj6PH1pt+2X/
+      Uecv3b1Hk/3Oe+M8ySorJD3KA94QTRnKX+zubkxRg/zCAki+as8rQc/d+BfVG698
+      ylUT5LVLNuwbWnffY2Zt5x5CDqH01mJnHmxzQEfn68rb3bGFaYPEn9EP+maQijv6
+      SsUM9A3lAoGBAODRDRn4gEIxjPICp6aawRrMDlRc+k6IWDF7wudjxJlaxFr2t7FF
+      rFYm+jrcG6qMTyq+teR8uHpcKm9X8ax0L6N6gw5rVzIeIOGma/ZuYIYXX2XJx5SW
+      SOas1xW6qEIbOMv+Xu9w2SWbhTgyRmtlxxjr2e7gQLz9z/vuTReJpInnAoGBAMMW
+      sq5lqUfAQzqxlhTobQ7tnB48rUQvkGPE92SlDj2TUt9phek2/TgRJT6mdcozvimt
+      JPhxKg3ioxG8NPmN0EytjpSiKqlxS1R2po0fb75vputfpw16Z8/2Vik+xYqNMTLo
+      SpeVkHu7fbtNYEK2qcU44OyOZ/V+5Oo9TuBIFRhHAoGACkqHhwDRHjaWdR2Z/w5m
+      eIuOvF3lN2MWZm175ouynDKDeoaAsiS2VttB6R/aRFxX42UHfoYXC8LcTmyAK5zF
+      8X3SMf7H5wtqBepQVt+Gm5zGSSqLcEnQ3H5c+impOh105CGoxt0rk4Ui/AeRIalv
+      C70AJOcvD3eu5aFq9gDe/1ECgYBAhkVbASzYGnMh+pKVH7rScSxto8v6/XBYT1Ez
+      7JOlMhD667/qvtFJtgIHkq7qzepbhnTv5x3tscQVnZY34/u9ILpD1s8dc+dibEvx
+      6S/gYLVorB5ois/DLMqaobRcew6Gs+XX9RPwmLahOJpZ9mh4XrOmCgPAYtP71YM9
+      ExpHCQKBgQCMMDDWGMRdFMJgXbx1uMere7OoniBdZaOexjbglRh1rMVSXqzBoU8+
+      yhEuHGAsHGWQdSBHnqRe9O0Bj/Vlw2VVEaJeL1ewRHb+jXSnuKclZOJgMsJAvgGm
+      SOWIahDrATA4g1T6yLBWQPhj3ZXD3eCMxT1Q3DvpG1DjgvXwmXQJAA==
+      -----END RSA PRIVATE KEY-----
+    cipher_suites: TLS_RSA_WITH_RC4_128_SHA:TLS_RSA_WITH_AES_128_CBC_SHA
+    status:
+      user: router_user
+      password: router_password
+  login:
+    logout:
+      redirect:
+        url: "/login?template=openstack"
+  uaa:
+    admin:
+      client_secret: admin_secret
+    batch:
+      username: batch_username
+      password: batch_password
+    cc:
+      client_secret: cc_client_secret
+    clients:
+      app-direct:
+        secret: app-direct_secret
+      developer_console:
+        secret: developer_console_secret
+      notifications:
+        secret: notification_secret
+      login:
+        secret: login_client_secret
+      doppler:
+        secret: doppler_secret
+      cloud_controller_username_lookup:
+        secret: cloud_controller_username_lookup_secret
+      gorouter:
+        secret: gorouter_secret
+    database:
+      max_connections: 100
+      max_idle_connections: 10
+      remove_abandoned: true
+      abandoned_timeout: 600
+      log_abandoned: true
+    jwt:
+      verification_key: vk
+      signing_key: sk
+    scim:
+      users:
+      - admin|fakepassword|scim.write,scim.read,openid,cloud_controller.admin,doppler.firehose
+  uaadb:
+    roles:
+    - name: uaaadmin
+      password: admin_password
+      tag: admin
+
+  ha_proxy:
+    client_timeout: 120
+    request_timeout: 120
+    server_timeout: 120
+    internal_only_domains:
+    - PRIVATE_DOMAIN_PLACEHOLDER
+    ssl_pem: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAp8EmRzHqDmDO9UJonrrU6FDaPfCyg3ywuH/Iu/0vqYL4LEcE
+      fyQVmtoZ4XXKl1Cl2PcpuKvKLdfHtGpQc+cGKkRMWxU13iarAlmT6JzHrdjVoCCX
+      cRtL+9kWN+GyStYlFtY59EIM5Zqc2j8A70w/W6gB/ho216oaaHyrXRMqmNnvJr0O
+      cCYh46Fdy60Moy8f8fiZ00sYtTErjGVM+qrBt3qhmFtAHxBcVaLEZaaFwxqCQmpC
+      zReKmoV7ntuRTFeEd21lqn22Xsv4qIoagUTCxRzRcFQu7SeompP1Rsamvt9bw5uC
+      5P9Nn4gTRa9UIjTH/930KU0tkyJUqZaxujju1QIDAQABAoIBAHQW9U9lmmzSz8Xo
+      bBAUiQwwD6e3r0HRA1baj2aQwvASw32Ys+LsbMsZzbk507Y9SFhKSyQSNjrdTcVr
+      oTtkD98mHpUVq46NweBBb1sVTBXhrYw/oa3TTxT9WSPY25JweYBBRh/jqZsnEQ7z
+      dMklQd9C+AYJzBQZEmdmhwxFHEBjyTlLtz6D7T85szXL0OeozndGNv7tk71+4dZE
+      UZEc3YmwS5ARQBClJgFDBbOEdl0mqy5u45vGm8bttdNYFpJ2Ai6o3GnpJ5bekSrz
+      96rSUREckCONqgm3B9aIsZEDBq66/OP55ZVyQPznO91pSu41vpaoOI+G5Cmq+Syj
+      ASkteQECgYEA33y6b7eHoFWfIh0xrxTv6sYuw4N+bJF1LWq9kadfZCMPqxjwc4Zr
+      7yp2Vwu9fv849IalMS0kzwAo6g0ET9/rUymxLwHG+LZ2loNtCY6ihMbF6OeM3VaE
+      1dxRSo/i1YaYdUtcPQl+VeCY1CllHVbxhvlQFS3KW8uyULOtZ5hVL0ECgYEAwCjI
+      alZ/eS1hAmLPYxznnpymCCiQ9E42UK7cIbAcpxkBSHd57Q8awaHc07roBEcvkOB/
+      tpoJe64tVI0YHkV9DKZA9RewdhKNjAq/LnnW1WhjCYVO6nQf3uvMUka9TNgEAKNp
+      pkKB7jeDcnNC23BUctkqvTk1rpTtxzzynCc27pUCgYBgBliY7dOhiYiBgOe7IZTg
+      XFz1dsdYYLtnU0i2j6LGBOaTjniqOqSfs6/7QLkgGwtezYem9I2vP5NU1Vj39O9I
+      4U4XM31JmiSkET5Fb/rWcA3TP8Jfy+/xb+Oh1OcS9e0F4OZ192FIBuPDrTGcBKJs
+      ay0EnJMpFAG++STVsTdQwQKBgQC2RDjNfJxPAXcZv0W9WkZskWN/K5NK2AD3CNUu
+      cxDKgpJP/Vu+OuyDLBf9ETVQEYGRpxAc0QEbunuuzmJJHFpfrDbDA6RSaoiug+cR
+      m2nmZKxD9JmFE37DgN/+TrDx+ZfaTyZAGKeLoEZjQebxpBvGEC1U7LX5kbP0nt/0
+      s9GL/QKBgCZkiYG8tJdisPGt+DskU3D3vjgL/hmMruuXlHFVAdSWbWXTzqMRrVVp
+      xzZly+katcQDcdcwQt3gF60k+yB5qsQ33y+1roy2N0Ie//FHdTbqpa+20r9QG8z+
+      WDh49CKvfDv+uVQwAS6QLuLwq/nEmSq56qX9tCU/MWt4fUnH/KVd
+      -----END RSA PRIVATE KEY-----
+      -----BEGIN CERTIFICATE-----
+      MIIEFTCCAv2gAwIBAgIJAKfds0/ie5qAMA0GCSqGSIb3DQEBBQUAMGQxCzAJBgNV
+      BAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNp
+      c2NvMRAwDgYDVQQKEwdQaXZvdGFsMRYwFAYDVQQLEw1DbG91ZCBGb3VuZHJ5MB4X
+      DTE1MDEyNjE5NDUzMloXDTI1MDEyMzE5NDUzMlowZDELMAkGA1UEBhMCVVMxEzAR
+      BgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFuY2lzY28xEDAOBgNV
+      BAoTB1Bpdm90YWwxFjAUBgNVBAsTDUNsb3VkIEZvdW5kcnkwggEiMA0GCSqGSIb3
+      DQEBAQUAA4IBDwAwggEKAoIBAQCnwSZHMeoOYM71QmieutToUNo98LKDfLC4f8i7
+      /S+pgvgsRwR/JBWa2hnhdcqXUKXY9ym4q8ot18e0alBz5wYqRExbFTXeJqsCWZPo
+      nMet2NWgIJdxG0v72RY34bJK1iUW1jn0QgzlmpzaPwDvTD9bqAH+GjbXqhpofKtd
+      EyqY2e8mvQ5wJiHjoV3LrQyjLx/x+JnTSxi1MSuMZUz6qsG3eqGYW0AfEFxVosRl
+      poXDGoJCakLNF4qahXue25FMV4R3bWWqfbZey/ioihqBRMLFHNFwVC7tJ6iak/VG
+      xqa+31vDm4Lk/02fiBNFr1QiNMf/3fQpTS2TIlSplrG6OO7VAgMBAAGjgckwgcYw
+      HQYDVR0OBBYEFB3qfwbNa57S5vlPoC0BSoEtts1uMIGWBgNVHSMEgY4wgYuAFB3q
+      fwbNa57S5vlPoC0BSoEtts1uoWikZjBkMQswCQYDVQQGEwJVUzETMBEGA1UECBMK
+      Q2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEQMA4GA1UEChMHUGl2
+      b3RhbDEWMBQGA1UECxMNQ2xvdWQgRm91bmRyeYIJAKfds0/ie5qAMAwGA1UdEwQF
+      MAMBAf8wDQYJKoZIhvcNAQEFBQADggEBAH3qQS1Azxod86bmW7cUFHCk2dfg9D3F
+      4vM+4yWs6GSHA38W4xk0pJJ87nbIB7A0r/jLmYirqy0lg2zlXsLQJO2b88QLj56S
+      CGJymrvMYKuNUG0Z8LK+6YgZEzodVx/sRrJEIyhe34xgb/7I7ziESDUZ51CPt23Q
+      rxz8SmSejz5mYKApl0OyiFBBaMdg22wowN3AXuVZVar6dmm3YeQ3jEOzs9gOFv3C
+      EumGrpsUbXDKl4mMRR6AsSeFx035E10V6NvNhPOzBAUUxFrpVX82EWCw4NNQZSfj
+      3Kh0H0rsFqWDTSXJdrqacQELFqqVHvpvhJKSKFayvvTbDFqT1Pz/WE4=
+      -----END CERTIFICATE-----
+# code_snippet cf-stub-openstack end
+# The previous line helps maintain current documentation at http://docs.cloudfoundry.org.
+

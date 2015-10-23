@@ -1,6 +1,9 @@
 ---
-name: cf-openstack-tiny
-director_uuid: DIRECTOR_UUID
+<% require 'yaml' %>
+<% domain = if_p('domain') { p('domain') }.else { "#{p('openstack.floating_ip')}.xip.io" } %>
+
+name: cf-219
+director_uuid: <%= p('director_uuid') %>
 
 releases:
   - name: cf
@@ -9,6 +12,9 @@ releases:
   # - name: cf-haproxy
   #   version: 2 # DEFAULT_CFHAPROXY_RELEASE_VERSION
   #   git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
+stemcells:
+  - name: bosh-openstack-kvm-ubuntu-trusty-go_agent
+    version: 3093
 
 templates:
   - cf/cf-deployment.yml
@@ -17,7 +23,7 @@ templates:
   - cf/cf-lamb.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-openstack.yml
-  - stubs/cf.yml
+  - common/default_secrets.yml
   # - cf/cf-deployment.yml
   # - cf-allow-services-access.yml
   # - cf/cf-properties.yml
@@ -30,6 +36,57 @@ templates:
   # - tiny/cf-use-haproxy.yml
   # - cf-networking.yml
 
-stemcells:
-  - name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 3104
+meta:
+  environment: cf-219
+
+  releases:
+  - name: cf
+    url: https://bosh.io/d/github.com/cloudfoundry/cf-release?v=219
+    sha1: 8f184915d4ad0bf27c49e03922364e3c13fed85d
+    version: latest
+
+  stemcell:
+    name: bosh-openstack-kvm-ubuntu-trusty-go_agent
+    url: https://bosh.io/d/stemcells/bosh-openstack-kvm-ubuntu-trusty-go_agent?v=3093 
+    sha1: 688fd678409ca19b4bea699e1d65d07b712c9a72
+    version: latest
+
+  openstack:
+    net_id: <%= p('openstack.net_id') %>
+    auth_url: <%= p('openstack.auth_url') %>
+    tenant: <%= p('openstack.tenant') %>
+    username: <%= p('openstack.username') %>
+    api_key: <%= p('openstack.api_key') %>
+    default_key_name: <%= p('openstack.default_key_name') %>
+    default_security_groups:
+      - <%= p('openstack.default_security_group') %>
+    connection_options:
+      ssl_verify_peer: false
+
+  floating_static_ips:
+    - <%= p('openstack.floating_ip') %>
+
+  <% prefix = p('networks.private_subnet.prefix') %>
+  networks:
+  - name: cf1
+    default: [dns, gateway]
+    subnets:
+    - range: <%= prefix %>.2.0/24
+      gateway: <%= prefix %>.2.1
+      dns: [ <%= p('networks.private_subnet.dns') %> ]
+      cloud_properties: { net_id: "<%= p('networks.private_subnet.net_id') %>" }
+      static:
+      - <%= prefix %>.2.16-<%= prefix %>.2.64
+      reserved:
+      - <%= prefix %>.2.2-<%= prefix %>.2.11
+  - name: cf2
+    subnets: []
+  - name: floating
+    type: vip
+
+properties:
+  domain: <%= domain %>
+
+# code_snippet cf-stub-openstack end
+# The previous line helps maintain current documentation at http://docs.cloudfoundry.org.
+
