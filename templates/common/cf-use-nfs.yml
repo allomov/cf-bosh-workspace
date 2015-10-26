@@ -31,9 +31,15 @@ jobs:
   - <<: (( merge ))
   - name: nfs_z1
     instances: 1
+    resource_pool: (( merge || medium_z1 ))
+    persistent_disk: (( merge || 102400 ))
+    update: (( merge || empty_hash ))
+    templates:
+      <<: (( merge ))
     networks:
       - name: cf1
         static_ips: (( static_ips(3) ))
+        default: [dns, gateway]
     properties:
       <<: (( merge ))
       nfs_server: (( meta.nfs_server ))
