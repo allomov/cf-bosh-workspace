@@ -1,4 +1,16 @@
 ---
+meta:
+  floating_static_ips: (( merge ))
+
+jobs:
+  - <<: (( merge ))
+  - <<: (( merge ))
+    name: ha_proxy_z1
+    networks:
+      - <<: (( merge ))
+      - name: floating
+        static_ips: (( meta.floating_static_ips ))
+
 properties:
   <<: (( merge ))
   ha_proxy:
