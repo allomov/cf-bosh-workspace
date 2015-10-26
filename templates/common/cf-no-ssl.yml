@@ -1,4 +1,6 @@
+---
 properties:
+  <<: (( merge ))
   ssl:
     skip_cert_verify: true
   uaa:

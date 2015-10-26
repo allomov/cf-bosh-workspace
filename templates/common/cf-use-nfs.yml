@@ -8,6 +8,7 @@ meta:
     allow_from_entries: (( merge || meta.nfs_client_ranges ))
 
 properties:
+  <<: (( merge ))
   nfs_server:
     share_path: /var/vcap/store
   template_only:

@@ -4,6 +4,7 @@ update:
   serial: false
 
 properties:
+  <<: (( merge ))
   template_only:
     aws:
       <<: (( merge ))
