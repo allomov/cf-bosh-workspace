@@ -34,8 +34,7 @@ jobs:
     resource_pool: (( merge || medium_z1 ))
     persistent_disk: (( merge || 102400 ))
     update: (( merge || empty_hash ))
-    templates:
-      <<: (( merge ))
+    templates: (( merge ))
     networks:
       - name: cf1
         static_ips: (( static_ips(3) ))
