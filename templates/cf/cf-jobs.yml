@@ -48,8 +48,8 @@ meta:
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
-  # - name: consul_agent
-  #   release: (( meta.consul_templates.consul_agent.release ))
+  - name: consul_agent
+    release: (( meta.consul_templates.consul_agent.release ))
   - name: nfs_mounter
     release: (( meta.release.name ))
 
@@ -86,8 +86,8 @@ meta:
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
-  # - name: consul_agent
-  #   release: (( meta.consul_templates.consul_agent.release ))
+  - name: consul_agent
+    release: (( meta.consul_templates.consul_agent.release ))
 
   hm9000_routes:
   - name: hm9000
@@ -128,8 +128,8 @@ meta:
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
-  # - name: consul_agent
-  #   release: (( meta.consul_templates.consul_agent.release ))
+  - name: consul_agent
+    release: (( meta.consul_templates.consul_agent.release ))
 
   stats_templates:
   - name: collector
@@ -153,30 +153,30 @@ meta:
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
-  # - name: consul_agent
-  #   release: (( meta.consul_templates.consul_agent.release ))
+  - name: consul_agent
+    release: (( meta.consul_templates.consul_agent.release ))
   - name: route_registrar
     release: (( meta.release.name ))
 
 jobs:
-  # - name: consul_z1
-  #  templates: (( merge || meta.consul_templates ))
-  #  instances: 2
-  #  persistent_disk: 1024
-  #  resource_pool: small_z1
-  #  networks:
-  #    - name: cf1
-  #      static_ips: (( merge || nil ))
-  #      default: [dns, gateway]
-  #  update:
-  #    serial: true
-  #    max_in_flight: 1
-  #  properties:
-  #    consul:
-  #      agent:
-  #        mode: server
-  #    metron_agent:
-  #      zone: z1
+  - name: consul_z1
+    templates: (( merge || meta.consul_templates ))
+    instances: 2
+    persistent_disk: 1024
+    resource_pool: small_z1
+    networks:
+      - name: cf1
+        static_ips: (( merge || nil ))
+        default: [dns, gateway]
+    update:
+      serial: true
+      max_in_flight: 1
+    properties:
+      consul:
+        agent:
+          mode: server
+      metron_agent:
+        zone: z1
 
   - name: consul_z2
     templates: (( merge || meta.consul_templates ))
