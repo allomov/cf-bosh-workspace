@@ -19,7 +19,8 @@ templates:
 
   - cf/cf-deployment.yml
   - cf/cf-resource-pools.yml
-  - common/cf-use-nfs.yml
+  - common/cf-nfs.yml
+  - common/cf-consul.yml
   - common/cf-haproxy.yml
   - cf/cf-jobs.yml
   - cf/cf-lamb.yml
