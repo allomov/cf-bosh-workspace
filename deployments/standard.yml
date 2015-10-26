@@ -16,16 +16,19 @@ stemcells:
     version: 3093
 
 templates:
+  - common/cf-haproxy.yml
+  - common/cf-no-ssl.yml
+
   - cf/cf-deployment.yml
   - cf/cf-resource-pools.yml
   - common/cf-use-nfs.yml
   - cf/cf-jobs.yml
   - cf/cf-lamb.yml
+  
   - cf/cf-properties.yml
   - cf/cf-infrastructure-openstack.yml
-  - common/default_secrets.yml
+  - common/cf-secrets.yml
   - common/cf-networking.yml
-  - common/cf-no-ssl.yml
   - common/parallel.yml
   - common/set-domain-from-meta.yml
 
