@@ -36,8 +36,8 @@ meta:
     release: (( meta.release.name ))
   - name: statsd-injector
     release: (( lamb_meta.release.name ))
-  # - name: consul_agent
-  #   release: (( meta.consul_templates.consul_agent.release ))
+  - name: consul_agent
+    release: (( meta.consul_templates.consul_agent.release ))
   - name: nfs_mounter
     release: (( meta.release.name ))
   - name: route_registrar
