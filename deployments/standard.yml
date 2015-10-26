@@ -18,11 +18,11 @@ stemcells:
 templates:
   - cf/cf-deployment.yml
   - cf/cf-resource-pools.yml
+  - common/cf-use-nfs.yml
   - cf/cf-jobs.yml
   - cf/cf-lamb.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-openstack.yml
-  - common/cf-use-nfs.yml
   - common/default_secrets.yml
   - common/cf-networking.yml
   - common/cf-no-ssl.yml
