@@ -3,6 +3,8 @@ meta:
     address: (( merge || jobs.nfs_z1.networks.cf1.static_ips.[0] ))
 
 properties:
+  nfs_server:
+    share_path: /var/vcap/store
   template_only:
     aws:
       <<: (( merge ))
