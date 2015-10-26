@@ -2,6 +2,7 @@
 properties:
   <<: (( merge ))
   consul:
+    <<: (( merge ))
     agent_key: |
       -----BEGIN RSA PRIVATE KEY-----
       MIIEpAIBAAKCAQEAvcm4PwEWludyLZYS0JRKG7c6owoDHIauhvE/PmOp1fJUxQff
