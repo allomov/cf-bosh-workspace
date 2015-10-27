@@ -1,0 +1,6 @@
+jobs:
+  - <<: (( merge ))
+  - <<: (( merge ))
+    name: consul_z1
+    instances: 0
+

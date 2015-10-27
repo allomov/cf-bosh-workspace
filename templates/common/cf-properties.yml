@@ -16,6 +16,7 @@ properties:
   cc:
     broker_client_timeout_seconds: 600
     maximum_app_disk_in_mb: 4096
+    allow_app_ssh_access: false
     packages:
       max_package_size: 4294967296
   dea_next:
