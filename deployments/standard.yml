@@ -24,7 +24,7 @@ templates:
   - cf/cf-jobs.yml
   - cf/cf-lamb.yml
 
-  # - common/cf-consul.yml
+  - common/cf-consul-secrets.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-openstack.yml
 
