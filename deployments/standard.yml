@@ -39,15 +39,11 @@ meta:
 
   releases:
   - name: cf
-    url: https://bosh.io/d/github.com/cloudfoundry/cf-release?v=219
-    sha1: 8f184915d4ad0bf27c49e03922364e3c13fed85d
-    version: latest
+    version: 219
 
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    url: https://bosh.io/d/stemcells/bosh-openstack-kvm-ubuntu-trusty-go_agent?v=3093 
-    sha1: 688fd678409ca19b4bea699e1d65d07b712c9a72
-    version: latest
+    version: 3093
 
   openstack:
     net_id: net_id
