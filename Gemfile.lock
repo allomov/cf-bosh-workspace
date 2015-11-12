@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/Altoros/bosh-workspace.git
-  revision: 0b79df6bdcf72ad2c86a5425963fd13a11474420
+  revision: dee83440adbc17292fbc5d1c678d83da5b8c7ea7
   branch: dev
   specs:
     bosh-workspace (0.9.4)
