@@ -10,7 +10,7 @@ meta:
 properties:
   <<: (( merge ))
   nfs_server:
-    share_path: /var/vcap/store
+    share_path: /var/vcap/nfs
 
 networks: (( merge ))
 

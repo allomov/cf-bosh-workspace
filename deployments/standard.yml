@@ -57,18 +57,18 @@ meta:
       ssl_verify_peer: false
 
   floating_static_ips:
-    - openstack.floating_ip
+    - floating_ip
 
   networks:
     ipmask: "10.10"
-    dns: [ networks.private_subnet.dns ]
-    security_groups: [ openstack.default_security_group ]  
+    dns: [ '8.8.8.8' ]
+    security_groups: [ 'default_security_group' ]  
   
     cf1:
-      quad: "networks.private_subnet.quad"
-      net_id: "networks.private_subnet.net_id"
-      static: [ ]
-      reserved: [ ]
+      quad: "2"
+      net_id: "net_id"
+      static: [ "10.10.2.16-10.10.2.64" ]
+      reserved: [ "10.10.2.2-10.10.2.11" ]
     cf2:  # stub
       quad: "3"
       net_id: CF_SUBNET2

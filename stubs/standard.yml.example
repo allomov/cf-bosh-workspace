@@ -13,6 +13,9 @@ meta:
     default_security_group: default_security_group
     floating_ip: floating_ip
 
+  floating_static_ips:
+    - floating_ip_for_haproxy
+
   networks:
     ipmask: "10.10"
     dns: [ 8.8.8.8 ]
