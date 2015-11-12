@@ -1,8 +1,6 @@
 ---
-<% domain = if_p('domain') { p('domain') }.else { "#{p('openstack.floating_ip')}.xip.io" } %>
-
 name: cf-219
-director_uuid: <%= p('director_uuid') %>
+director_uuid: 'director_uuid'
 
 releases:
   - name: cf
@@ -52,36 +50,34 @@ meta:
     version: latest
 
   openstack:
-    net_id: <%= p('openstack.net_id') %>
-    auth_url: <%= p('openstack.auth_url') %>
-    tenant: <%= p('openstack.tenant') %>
-    username: <%= p('openstack.username') %>
-    api_key: <%= p('openstack.api_key') %>
-    default_key_name: <%= p('openstack.default_key_name') %>
-    default_security_groups:
-      - <%= p('openstack.default_security_group') %>
+    net_id: net_id
+    auth_url: auth_url
+    tenant: tenant
+    username: username
+    api_key: api_key
+    default_key_name: default_key_name
+    default_security_groups: [ default ]
     connection_options:
       ssl_verify_peer: false
 
   floating_static_ips:
-    - <%= p('openstack.floating_ip') %>
+    - openstack.floating_ip
 
-  <% prefix = p('networks.private_subnet.prefix') %>
   networks:
-    ipmask: "<%= prefix %>"
-    dns: [ <%= p('networks.private_subnet.dns') %> ]
-    security_groups: [ <%= p('openstack.default_security_group') %> ]  
+    ipmask: "10.10"
+    dns: [ networks.private_subnet.dns ]
+    security_groups: [ openstack.default_security_group ]  
   
     cf1:
-      quad: "<%= p('networks.private_subnet.quad') %>"
-      net_id: "<%= p('networks.private_subnet.net_id') %>"
-      static: [ "<%= prefix %>.2.16-<%= prefix %>.2.64" ]
-      reserved: [ "<%= prefix %>.2.2-<%= prefix %>.2.11" ]
+      quad: "networks.private_subnet.quad"
+      net_id: "networks.private_subnet.net_id"
+      static: [ ]
+      reserved: [ ]
     cf2:  # stub
       quad: "3"
       net_id: CF_SUBNET2
 
-  domain: <%= domain %>
+  domain: domain
 
 # code_snippet cf-stub-openstack end
 # The previous line helps maintain current documentation at http://docs.cloudfoundry.org.
