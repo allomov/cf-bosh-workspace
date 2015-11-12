@@ -1,19 +1,24 @@
 ---
-properties:
-  # domain: some-domain
-  director_uuid: "..."
+director_uuid: director_uuid
+
+meta:
+  domain: some-domain
   openstack:
-    net_id: "..."
-    auth_url: "..."
-    tenant: "..."
-    username: "..."
-    api_key: "..."
-    default_key_name: "..."
-    default_security_group: "..."
-    floating_ip: 192.168.x.x
+    net_id: net_id
+    auth_url: auth_url
+    tenant: tenant
+    username: username
+    api_key: api_key
+    default_key_name: default_key_name
+    default_security_group: default_security_group
+    floating_ip: floating_ip
 
   networks:
-    private_subnet:
-      prefix: '10.10'
-      net_id: '...'
-      dns: '192.168.0.2'
+    ipmask: "10.10"
+    dns: [ 8.8.8.8 ]
+    security_groups: [ cf-default ]
+    cf1:
+      quad: '2'
+      net_id: net_id
+      static: [ "10.10.2.16-10.10.2.64" ]
+      reserved: [ "10.10.2.2-10.10.2.11" ]
